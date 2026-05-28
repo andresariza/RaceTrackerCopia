@@ -4,6 +4,7 @@ package com.example.racetracker.ui
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.delay
 
 /**
  * This class represents a state holder for race participant.
@@ -11,7 +12,7 @@ import androidx.compose.runtime.setValue
 class RaceParticipant(
     val name: String,
     val maxProgress: Int = 100,
-    val progressDelayMillis: Long = 500L,
+    val progressDelayMillis: Long = 100L,
     private val progressIncrement: Int = 1,
     private val initialProgress: Int = 0
 ) {
@@ -32,6 +33,13 @@ class RaceParticipant(
      */
     fun reset() {
         currentProgress = 0
+    }
+
+    suspend fun run() {
+        while(currentProgress < maxProgress){
+            delay((0..progressDelayMillis).random())
+            currentProgress +=  progressIncrement
+        }
     }
 }
 
